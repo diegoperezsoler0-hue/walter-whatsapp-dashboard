@@ -13,4 +13,14 @@ window.createCampaign=createCampaign;
 window.selectCampaign=selectCampaign;
 window.saveSetting=saveSetting;
 window.requestDeviceRefresh=requestDeviceRefresh;
-window.saveDevice=saveDevice;
+window.saveDevice=saveDevice
+async function controlRun(action){
+ const id=selectedRun||(state&&state.live&&state.live.run&&state.live.run.id); if(!id)return toast('No hay run seleccionado');
+ if(action==='delete'&&!confirm('Eliminar este run y sus logs/matriz? Esta acción no se puede deshacer.'))return;
+ const label={pause:'pausado',resume:'reanudado',delete:'eliminado'}[action]||action;
+ await api('/api/run/control',{method:'POST',body:JSON.stringify({run_id:id,action})});
+ if(action==='delete')selectedRun=null;
+ await loadState(true); toast('Run '+label);
+}
+window.controlRun=controlRun;
+;
