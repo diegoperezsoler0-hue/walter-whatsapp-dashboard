@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*credentials*.json
+*service-account*.json
+secrets/
+.envrc
+.DS_Store
+node_modules/
+dist/
+build/
+coverage/
+.cache/
